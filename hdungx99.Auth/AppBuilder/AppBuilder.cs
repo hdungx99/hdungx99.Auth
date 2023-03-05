@@ -4,12 +4,18 @@
     {
         public static void UseBuilder(this IApplicationBuilder builder, bool isDev)
         {
-            if(isDev)
+            if (isDev)
             {
                 builder.UseDeveloperExceptionPage();
             }
-
+            builder.UseStaticFiles();
+            builder.UseRouting();
             builder.UseIdentityServer();
+            builder.UseAuthorization();
+            builder.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
         }
     }
 }

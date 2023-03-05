@@ -20,23 +20,12 @@ namespace hdungx99.Auth.Configuration
               new TestUser
               {
                   SubjectId = "a9ea0f25-b964-409f-bcce-c923266249b4",
-                  Username = "Mick",
-                  Password = "MickPassword",
+                  Username = "dane.dung",
+                  Password = "Sul@30ka#",
                   Claims = new List<Claim>
                   {
-                      new Claim("given_name", "Mick"),
-                      new Claim("family_name", "Mining")
-                  }
-              },
-              new TestUser
-              {
-                  SubjectId = "c95ddb8c-79ec-488a-a485-fe57a1462340",
-                  Username = "Jane",
-                  Password = "JanePassword",
-                  Claims = new List<Claim>
-                  {
-                      new Claim("given_name", "Jane"),
-                      new Claim("family_name", "Downing")
+                      new Claim("given_name", "Dane"),
+                      new Claim("family_name", "Dungx")
                   }
               }
           };
@@ -46,10 +35,31 @@ namespace hdungx99.Auth.Configuration
             {
                new Client
                {
-                    ClientId = "company-employee",
-                    ClientSecrets = new [] { new Secret("codemazesecret".Sha512()) },
+                    ClientId = "hdungx99.movies",
+                    ClientSecrets = new [] { new Secret("hdungx99-movies".Sha512()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId }
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, "hdungx99.moviesAPI" }
+               },
+               new Client
+               {
+                    ClientId = "hdungx99.movies.mvc-client",
+                    ClientSecrets = new [] { new Secret("hdungx99-movies.mvc-client".Sha512()) },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new List<string>{ "https://localhost:5010/signin-oidc" },
+                    RequirePkce = false,
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile }
+               }
+            };
+
+        public static IEnumerable<ApiScope> GetApiScopes() =>
+            new List<ApiScope> { new ApiScope("hdungx99.moviesAPI", "hdungx99 Movies API") };
+
+        public static IEnumerable<ApiResource> GetApiResources() =>
+            new List<ApiResource>
+            {
+                new ApiResource("hdungx99.moviesAPI", "hdungx99 Movies API")
+                {
+                    Scopes = { "hdungx99.moviesAPI" }
                 }
             };
     }

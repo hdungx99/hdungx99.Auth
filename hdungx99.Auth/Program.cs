@@ -5,9 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddServices();
 
 var app = builder.Build();
-
 app.UseBuilder(app.Environment.IsDevelopment());
 
-app.MapGet("/", () => "Hello World!");
-
-await app.RunAsync();
+app.MapRazorPages();
+app.Run();
